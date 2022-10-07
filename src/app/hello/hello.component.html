@@ -1,0 +1,217 @@
+<style>
+    .part-bg {
+        background: #ccc;
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+</style>
+
+<!-- 1.插值语法 {{}}可以简单理解为一段js执行区域，只不过语法有限制 -->
+
+<!-- 字符串拼接 -->
+<div [class] = "'part-bg'">
+    <h1>1.插值语法</h1>
+    <p>{{name + ' ' + '你好啊'}}</p>
+    <!-- 数值的计算 -->
+    <p>{{ 1+2 }}</p>
+    <!-- 三目运算 -->
+    <p>{{ true ? '真' : '假' }}</p>
+    <p>{{ false ? '真' : '假' }}</p>
+    <!-- 显示变量 -->
+    <p>{{date}}</p>
+</div>
+
+
+<!-- 2.属性绑定 语法是[属性名] = '属性值'-->
+<div [class] = "'part-bg'">
+    <h1>2.属性绑定</h1>
+    <div [id] = "'box'">id为box 用字符串表示id属性值</div>
+    <div [id] = "box">id为box 用变量表示id属性值</div>
+</div>
+
+
+<!-- class 渲染方式 -->
+
+<div [class] = "'part-bg'">
+    <h1>3.class 渲染方式</h1>
+    <div [class] = "'item'">用字符串表示class属性值</div>
+    <div [class] = "itemClass">用变量表示class属性值</div>
+
+    <!-- 只要为真就会显示 不管是字符串还是true-->
+    <div [class.main] = 'true'>是否显示类名：是</div> 
+    <div [class.main] = "'xxx'">是否显示类名：是</div> 
+
+
+    <div [class.main] = 'false'>是否显示类名：否</div>
+    <div [class.main] = ''>是否显示类名：否</div>
+
+    <div [class] = "{'item-title': true, 'item-bg': false}"></div>
+    <div [class] = "['item-title','item-bg']"></div>
+
+    <div [ngClass] = "'self-class self-bg'">内部指令 ngClass字符串表示</div>
+    <div [ngClass] = "{'isActive': isActive}">内部指令 ngClass对象形式 通过变量决定是否显示</div>
+</div>
+
+<!-- 样式绑定 -->
+
+<div  [class] = "'part-bg'">
+    <h1>4.样式绑定 —— 单一样式</h1>
+
+    <div [style.width] = "'300px'">单一样式绑定元素宽度</div>
+    <div [style.width.px] = "300">单一样式绑定元素宽度</div>
+    <div [style.width.px] = "'300'">单一样式绑定元素宽度</div>
+
+    <div [style.color] = "'red'">单一样式绑定字体颜色</div>
+    <div [style.background] = "'green'">单一样式绑定背景颜色</div>
+</div>
+
+<div  [class] = "'part-bg'">
+    <h1>5.样式绑定 —— 多样式</h1>
+
+    <div [style] = "'background:red; color: #fff'">多样式绑定</div>
+    <div [style] = "{'background': 'pink', 'color': '#fff'}">多样式绑定</div>
+
+    <div [ngStyle] = "{'color': 'red'}">内部指令 ngStyle控制字体颜色</div>
+    <div [ngStyle] = "{'fontSize': isMax ? '24px' : '12px'}">内部指令 ngStyle 三目决定字体大小</div>
+</div>
+
+<div  [class] = "'part-bg'">
+    <h1>条件判断语法</h1>
+    <div *ngIf = "isMax"> isMax == true</div>
+    <div *ngIf = "!isMax"> isMax == false</div>
+    <!-- 解析完了之后如下 -->
+    <ng-template [ngIf] = "isMax">
+        <div>isMax == true</div>
+    </ng-template>
+
+    <h2>if-else</h2>
+    <ng-container *ngIf = "!isMax; else elseTemplate">
+        <div>isMax为真时显示</div>
+    </ng-container>
+    <ng-template #elseTemplate>
+        <div>isMax为假时显示</div>
+    </ng-template>
+</div>
+
+<div  [class] = "'part-bg'">
+    <h1>循环语句</h1>
+    <!-- odd 奇数的 -->
+    <h2>for循环</h2>
+    <div *ngFor="let item of colors let i = index let itemOdd = odd"> 
+        {{i}}
+        {{itemOdd}}
+        {{item}}
+    </div>
+
+    <h2>switch循环</h2>
+    <span [ngSwitch]="type">
+    <p *ngSwitchCase="1">
+        type == 1
+    </p>
+    <p *ngSwitchCase="2">
+        type == 2
+    </p>
+    <p *ngSwitchDefault>
+        type == 00000
+    </p>
+    </span>
+</div>
+
+<div  [class] = "'part-bg'">
+    <h1>事件绑定</h1>
+    <button (click)="onClick($event)">点击</button>
+    <input (input)="onInput($event)" type="text">
+    <div></div>
+</div>
+
+<div  [class] = "'part-bg'">
+    <h1>模板引用对象</h1>
+    用户名：<input #username type="text">
+    <button (click)="getUerName(username.value)">获取用户名</button>
+    获取到的用户名为：<span>{{userNameValue}}</span>
+    <div #box>
+        <input type="text">
+        <button (click)="getBoxValue(box)">获取box里面的元素</button>
+    </div>
+</div>
+
+<div  [class] = "'part-bg'">
+    <h1>数据双向绑定（ngModel只对表单元素有效）</h1>
+    <input type="text" [(ngModel)]="title">
+    标题：<span>{{title}}</span>
+</div>
+
+<div  [class] = "'part-bg'">
+    <h1>动态表单控件</h1>
+    年龄：<input type="text" [formControl]="age">
+    年龄：<span>{{age.value}}</span>
+    <h2>修改年龄</h2>
+    <button (click)="groupUp('22')">长大</button>
+</div>
+
+<div  [class] = "'part-bg'">
+    <h1>动态表单控件组</h1>
+    <form [formGroup]="loginForm">
+        <label for="">
+            账号：<input type="text" formControlName="username"><br>
+            密码：<input type="text" formControlName="password">
+        </label>
+    </form>
+    <button (click)="onLogin()">登录</button>
+</div>
+
+<div  [class] = "'part-bg'">
+    <h1>表单验证</h1>
+    账号 <input required #nameValid="ngModel" type="text" [(ngModel)]="formData.name">
+    <p>验证是否通过: {{nameValid.valid}}</p>
+    <p *ngIf="!nameValid.valid">请输入账号</p>
+    <hr>
+    密码 <input type="text" required #pswValid="ngModel" [(ngModel)]="formData.password">
+    <p>验证是否通过: {{pswValid.valid}}</p>
+</div>
+
+<div  [class] = "'part-bg'">
+    <h1>自定义表单验证</h1>
+    <form action="" [formGroup]="valiDataForm">
+        账号<input type="text" formControlName="username">
+        <p>value:{{valiDataForm.get("username")?.value}}</p>
+        <p>反馈信息:{{valiDataForm.get("username")?.errors?.['required'] ? '账号必填': '账号有效'}}</p>
+        <hr>
+        密码<input type="text" formControlName="password">
+        <p>value:{{valiDataForm.get("password")?.value}}</p>
+        <p>反馈信息:{{valiDataForm.get("password")?.errors?.['msg'] ? valiDataForm.get("password")?.errors?.['msg'] :'密码有效'}}</p>
+        <hr>
+        电话<input type="text" formControlName="phone">
+        <p>value:{{valiDataForm.get("phone")?.value}}</p>
+        <p>反馈信息:{{valiDataForm.get("phone")?.errors?.['msg'] ? valiDataForm.get("phone")?.errors?.['msg'] : '电话号码有效'}}</p>
+        <hr>
+    </form>
+    <button (click)="onSubmit()">提交</button>
+</div>
+
+<div  [class] = "'part-bg'">
+    <h1>angular管道</h1>
+    <div>
+        <p>{{dateFormat | date:'yyyy-mm-dd hh:mm:ss'}}</p>
+        <p>{{name | uppercase }}</p>
+        <p>{{name | uppercase | lowercase }}</p>
+    </div>
+    <h2>自定义管道</h2>
+    <p>{{name | test}}</p>
+</div>
+
+<div  [class] = "'part-bg'">
+    <h1></h1>
+</div>
+
+<div  [class] = "'part-bg'">
+    <h1></h1>
+</div>
+
+
+
+
+
+
+
+

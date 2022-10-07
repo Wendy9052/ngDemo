@@ -1,0 +1,12 @@
+<p>home works!</p>
+<button (click)="changeTitle()">改变标题</button>
+
+<p *ngFor="let item of list">{{item}}</p>
+<app-title #titleDom [title]="title" (addList)="addListFun($event)"></app-title>
+
+<button (click)="useChildFun()">调用子组件</button>
+
+<h2>展示数据</h2>
+<p *ngFor="let item of showList">{{item}}</p>
+
+<button (click)="addNode()">添加node</button>
